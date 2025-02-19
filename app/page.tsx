@@ -9,7 +9,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-900 text-white">
       <header className="sticky top-0 z-10 bg-gray-800 p-4 border-b-2 border-gray-700">
         <h1 className="text-2xl font-bold">
-          Herramienta para compartir archivos
+          Herramienta para compartir archivos!
         </h1>
       </header>
       <main className="p-8 flex flex-col gap-16 max-w-3xl mx-auto">
