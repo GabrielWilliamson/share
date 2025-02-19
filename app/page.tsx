@@ -1,122 +1,58 @@
 "use client";
 
-import { FormEvent, useRef, useState } from "react";
-import { useMutation, useQuery, useAction } from "convex/react";
-import { api } from "../convex/_generated/api";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import Link from "next/link";
+import { Calendar, ChevronRight } from "lucide-react";
 
 export default function Home() {
-  return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <header className="sticky top-0 z-10 bg-gray-800 p-4 border-b-2 border-gray-700">
-        <h1 className="text-2xl font-bold">
-          Herramienta para compartir archivos!
-        </h1>
-      </header>
-      <main className="p-8 flex flex-col gap-16 max-w-3xl mx-auto">
-        <Content />
-      </main>
-      <footer>
-        <p className="text-center text-sm text-gray-400">
-          Creado por Gabriel con ❤️ 
-        </p>
-      </footer>
-    </div>
+  const lessons = useQuery(api.lessons.listShortLessons) ?? [];
+
+  // Sort lessons by date, most recent first
+  const sortedLessons = [...lessons].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
-}
-
-function Content() {
-  const generateUploadUrl = useMutation(api.tasks.generateUploadUrl);
-  const addTask = useMutation(api.tasks.addTask);
-  const tasks = useQuery(api.tasks.listTasks) ?? [];
-  const getFileUrl = useAction(api.tasks.getFileUrl);
-
-  const [title, setTitle] = useState("");
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const fileInput = useRef<HTMLInputElement>(null);
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!selectedFile) return;
-
-    // Step 1: Get a short-lived upload URL
-    const postUrl = await generateUploadUrl();
-
-    // Step 2: POST the file to the URL
-    const result = await fetch(postUrl, {
-      method: "POST",
-      headers: { "Content-Type": selectedFile.type },
-      body: selectedFile,
-    });
-    const { storageId } = await result.json();
-
-    // Step 3: Save the task with the storage ID
-    await addTask({
-      title,
-      fileName: selectedFile.name,
-      storageId,
-    });
-
-    setTitle("");
-    setSelectedFile(null);
-    if (fileInput.current) fileInput.current.value = "";
-  };
 
   return (
-    <div className="flex flex-col gap-8">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 bg-gray-800 p-6 rounded-lg"
-      >
-        <h2 className="text-xl font-bold">Subir archivos</h2>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Ingresa tu nombre o el nombre del archivo"
-          className="p-2 border rounded bg-gray-700 text-white"
-          required
-        />
-        <input
-          type="file"
-          ref={fileInput}
-          onChange={(e) => setSelectedFile(e.target.files?.[0] ?? null)}
-          className="p-2 border rounded bg-gray-700 text-white"
-          required
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
-          disabled={!selectedFile}
-        >
-          Subir
-        </button>
-      </form>
-
-      <div className="bg-gray-800 p-6 rounded-lg">
-        <h2 className="text-xl font-bold mb-4">Listado de archivos</h2>
-        {tasks.map((task) => (
-          <div
-            key={task._id}
-            className="mb-4 p-4 bg-gray-700 rounded-md shadow"
-          >
-            <h3 className="font-bold">{task.title}</h3>
-            <p className="text-sm text-gray-400">
-              {new Date(task.createdAt).toLocaleDateString("es-ES", {
-                month: "short",
-                day: "numeric",
-              })}
-            </p>
-            <button
-              onClick={async () => {
-                const url = await getFileUrl({ storageId: task.storageId });
-                window.open(url!, "_blank");
-              }}
-              className="text-blue-400 hover:underline text-sm"
+    <div className="min-h-screen bg-black text-white p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold mb-8 text-center">
+          Clases Recientes
+        </h1>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {sortedLessons.map((lesson) => (
+            <Link
+              href={`/lesson/${lesson.id}`}
+              key={lesson.id}
+              className="bg-gray-900 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
             >
-              Descargar {task.fileName}
-            </button>
-          </div>
-        ))}
+              <div className="p-6">
+                <h2 className="text-xl font-semibold mb-2 text-white">
+                  {lesson.title}
+                </h2>
+                <div className="flex items-center text-gray-400 mb-4">
+                  <Calendar className="w-4 h-4 mr-2" />
+                  <time dateTime={lesson.date.toString()}>
+                    {new Date(lesson.date).toLocaleDateString("es-ES", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </time>
+                </div>
+                <div className="flex items-center justify-between text-blue-400 mt-4">
+                  <span className="text-sm">Ver detalles</span>
+                  <ChevronRight className="w-5 h-5" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+        {sortedLessons.length === 0 && (
+          <p className="text-center text-gray-400 mt-8">
+            No hay clases disponibles en este momento.
+          </p>
+        )}
       </div>
     </div>
   );

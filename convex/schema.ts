@@ -8,4 +8,14 @@ export default defineSchema({
     storageId: v.string(),
     createdAt: v.number(),
   }),
+  lessons: defineTable({
+    title: v.string(),
+    date: v.number(),
+    archivos: v.array(v.object({
+      fileName: v.string(),
+      storageId: v.string(),
+    })),
+    enlaces: v.array(v.string()),
+    tareas: v.array(v.string()),
+  }),
 });
