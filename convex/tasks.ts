@@ -1,8 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query, action } from "./_generated/server";
 
-
-
 export const addTask = mutation({
   args: {
     title: v.string(),
@@ -22,10 +20,7 @@ export const addTask = mutation({
 });
 
 export const listTasks = query({
-  args: {lessonId: v.id("lessons")},
   handler: async (ctx) => {
     return await ctx.db.query("tasks").order("desc").collect();
   },
 });
-
-
