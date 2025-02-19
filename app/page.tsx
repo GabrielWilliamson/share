@@ -15,6 +15,11 @@ export default function Home() {
       <main className="p-8 flex flex-col gap-16 max-w-3xl mx-auto">
         <Content />
       </main>
+      <footer>
+        <p className="text-center text-sm text-gray-400">
+          Creado por Gabriel con ❤️ 
+        </p>
+      </footer>
     </div>
   );
 }
