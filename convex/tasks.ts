@@ -22,6 +22,7 @@ export const addTask = mutation({
 });
 
 export const listTasks = query({
+  args: {lessonId: v.id("lessons")},
   handler: async (ctx) => {
     return await ctx.db.query("tasks").order("desc").collect();
   },

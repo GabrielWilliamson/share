@@ -84,7 +84,7 @@ export default function ClassPage() {
           </section>
         )}
 
-        <section className="mb-12">
+        {/* <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-6 text-white">Tareas</h2>
           <div className="space-y-8">
             <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
@@ -94,7 +94,7 @@ export default function ClassPage() {
               <ListTasks />
             </div>
           </div>
-        </section>
+        </section> */}
       </div>
     </div>
   );
