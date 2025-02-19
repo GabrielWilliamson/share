@@ -4,8 +4,8 @@ import { useQuery, useAction } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import type { Id } from "@/convex/_generated/dataModel";
-import NewTask from "@/components/newTask";
-import ListTasks from "@/components/listTasks";
+// import NewTask from "@/components/newTask";
+// import ListTasks from "@/components/listTasks";
 import { FileDown, LinkIcon } from "lucide-react";
 
 export default function ClassPage() {
