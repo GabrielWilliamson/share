@@ -4,8 +4,13 @@ import { type FormEvent, useRef, useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import toast from "react-hot-toast";
+import { Id } from "@/convex/_generated/dataModel";
 
-export default function NewTask() {
+interface NewTaskProps {
+  lessonId: Id<"lessons">;
+}
+
+export default function NewTask({ lessonId }: NewTaskProps) {
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const addTask = useMutation(api.tasks.addTask);
   const [title, setTitle] = useState("");
@@ -35,6 +40,7 @@ export default function NewTask() {
         title,
         fileName: selectedFile.name,
         storageId,
+        lessonId,
       });
 
       setTitle("");
@@ -55,7 +61,7 @@ export default function NewTask() {
       onSubmit={handleSubmit}
       className="flex flex-col gap-4 bg-gray-900 p-6 rounded-lg"
     >
-      <h2 className="text-xl font-bold text-white">Agrega tu tarea ✔️</h2>
+      <h2 className="text-xl font-bold text-white">Agrega tu tarea</h2>
       <input
         type="text"
         value={title}

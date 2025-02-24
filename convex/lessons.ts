@@ -11,7 +11,6 @@ export const createLesson = mutation({
     const id = await ctx.db.insert("lessons", {
       ...args,
       archivos: [],
-      tareas: [],
     });
     return id;
   },
@@ -97,6 +96,21 @@ export const removeLink = mutation({
 
     await ctx.db.patch(args.lessonId, {
       enlaces: updatedLinks,
+    });
+  },
+});
+
+export const addLink = mutation({
+  args: {
+    lessonId: v.id("lessons"),
+    link: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const lesson = await ctx.db.get(args.lessonId);
+    if (!lesson) throw new Error("Lesson not found");
+
+    await ctx.db.patch(args.lessonId, {
+      enlaces: [...lesson.enlaces, args.link],
     });
   },
 });

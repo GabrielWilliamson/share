@@ -4,8 +4,8 @@ import { useQuery, useAction } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import type { Id } from "@/convex/_generated/dataModel";
-// import NewTask from "@/components/newTask";
-// import ListTasks from "@/components/listTasks";
+import NewTask from "@/components/newTask";
+import ListTasks from "@/components/listTasks";
 import { FileDown, LinkIcon } from "lucide-react";
 
 export default function ClassPage() {
@@ -84,17 +84,16 @@ export default function ClassPage() {
           </section>
         )}
 
-        {/* <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6 text-white">Tareas</h2>
+        <section className="mb-12">
           <div className="space-y-8">
             <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
-              <NewTask />
+              <NewTask lessonId={lessonId} />
             </div>
-            <div className=" p-6 rounded-lg shadow-lg">
-              <ListTasks />
+            <div className="p-6 rounded-lg shadow-lg">
+              <ListTasks lessonId={lessonId} />
             </div>
           </div>
-        </section> */}
+        </section>
       </div>
     </div>
   );

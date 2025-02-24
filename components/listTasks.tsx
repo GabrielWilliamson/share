@@ -4,9 +4,13 @@ import { useAction, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useState } from "react";
 import { FileDown } from "lucide-react";
+import { Id } from "@/convex/_generated/dataModel";
 
-export default function ListTasks() {
-  const tasks = useQuery(api.tasks.listTasks) ?? [];
+interface NewTaskProps {
+  lessonId: Id<"lessons">;
+}
+export default function ListTasks({ lessonId }: NewTaskProps) {
+  const tasks = useQuery(api.tasks.listTasks, { lessonId }) ?? [];
   const getFileUrl = useAction(api.files.getFileUrl);
   const [loadingFile, setLoadingFile] = useState<string | null>(null);
 
@@ -37,7 +41,7 @@ export default function ListTasks() {
     <div className="bg-black p-6 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-6 text-white">Listado de Tareas</h2>
       {tasks.length === 0 ? (
-        <p className="text-gray-400">No hay tareas disponibles.</p>
+        <p className="text-gray-400">No hay tareas.</p>
       ) : (
         <div className="space-y-4">
           {tasks.map((task) => (
