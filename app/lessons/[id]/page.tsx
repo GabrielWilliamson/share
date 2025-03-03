@@ -4,7 +4,6 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
-import { Toaster } from "react-hot-toast";
 import FileUploadForm from "@/components/fileUploadForm";
 import LinkList from "@/components/linkList";
 import FileList from "@/components/fileList";
@@ -26,8 +25,6 @@ export default function LessonPage() {
 
   return (
     <div className="min-h-screen p-8">
-      <Toaster position="top-right" />
-
       <div className="max-w-3xl mx-auto">
         <Link className="mb-10" href="/lessons">
           Regresar

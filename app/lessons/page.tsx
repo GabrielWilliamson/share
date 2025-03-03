@@ -3,7 +3,7 @@
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import LessonForm from "@/components/lessonForm";
 import LessonTable from "@/components/lessonTable";
 
@@ -21,7 +21,7 @@ export default function LessonsPage() {
     try {
       const lessonId = await createClass({
         title,
-        date: new Date(date).getTime(),
+        date: new Date(`${date}T00:00:00`).getTime(),
         enlaces,
       });
       toast.success("Lesson created successfully", { id: createToast });
@@ -34,7 +34,6 @@ export default function LessonsPage() {
 
   return (
     <div className="p-8">
-      <Toaster position="top-right" />
       <h1 className="text-3xl font-bold text-center mb-8">Clases</h1>
       <div className="max-w-3xl mx-auto mb-20">
         <LessonForm onSubmit={handleCreateLesson} />

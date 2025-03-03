@@ -5,6 +5,7 @@ import "./globals.css";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import Link from "next/link";
 import { List } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className="bg-black text-white">
+      <head>
+        <link rel="icon" href="/favicon.png" />
+      </head>
       <ConvexClientProvider>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
@@ -48,7 +52,7 @@ export default function RootLayout({
               </div>
             </div>
           </header>
-
+          <Toaster position="top-right" />
           <main className="flex-grow bg-black">{children}</main>
 
           <footer className="border-t border-gray-800 py-4">
