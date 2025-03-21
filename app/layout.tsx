@@ -42,13 +42,28 @@ export default function RootLayout({
                 <h1 className="text-2xl font-bold text-white">
                   Herramienta para compartir archivos
                 </h1>
-                <Link
-                  href="/"
-                  className="flex items-center bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out"
-                >
-                  <List className="mr-2" size={18} />
-                  Listado de Clases
-                </Link>
+                <div className="space-x-2 flex">
+                  <Link
+                    href="/"
+                    className="flex items-center bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out"
+                  >
+                    <List className="mr-2" size={18} />
+                    Listado de Clases
+                  </Link>
+
+                  <Link
+                    className="flex items-center bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out"
+                    href="https://campus.tecnacional.edu.ni/login/index.php"
+                  >
+                    Modulos transversales
+                  </Link>
+                  <Link
+                    className="flex items-center bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out"
+                    href="https://learningenglish.tecnacional.edu.ni/welcome/login"
+                  >
+                    Leaarn English INATEC
+                  </Link>
+                </div>
               </div>
             </div>
           </header>
